@@ -34,3 +34,21 @@
     width: 30px;
 }
 /*Header Area Search Bar Styling end*/
+
+/*Search Result Area Styling Start*/
+#search-results-area{
+    display: grid;
+    grid-template-columns: repeat(4, 200px);
+    gap: 50px;
+    justify-content: center;
+}
+#search-results-area > div{
+    background-color: #f1f1f1;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 15px;
+}
+#search-results-area > div > img{
+    width: 200px;
+    border-radius: 15px 15px 0 0;
+}
