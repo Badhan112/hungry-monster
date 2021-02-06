@@ -33,6 +33,11 @@
 #search-bar > div > img{
     width: 30px;
 }
+#error-message{
+    text-align: center;
+    display: none;
+    color: tomato;
+}
 /*Header Area Search Bar Styling end*/
 
 /*Search Result Area Styling Start*/
@@ -61,4 +66,12 @@
 #details-area div{
     width: max-content;
     margin: 50px auto;
+}
+#details-area img{
+    width: 300px;
+    border-radius: 10px;
+}
+#details-area ul{
+    list-style: none;
+    padding: 0;
 }

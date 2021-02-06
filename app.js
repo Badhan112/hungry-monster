@@ -23,7 +23,7 @@ const displayMealDetails = mealId => {
                 <ul id="ingredients-list"></ul>
             </div>
         `;
-        
+
         detailsSection.innerHTML = info;
         for (let i = 1; i <= 20; i++) {
             const ingredient = `strIngredient${i}`;
@@ -35,6 +35,9 @@ const displayMealDetails = mealId => {
                 document.getElementById("ingredients-list").appendChild(listItem);
             }
         }
+    }).catch(error => {
+        document.getElementById("error-message").innerText = "Connection Lost! Please Check Your Internet Connection";
+        document.getElementById("error-message").style.display = "block";
     });
 }
 
@@ -60,6 +63,8 @@ const displaySearchResult = mealName => {
                 displayMealDetails(meal.idMeal);
             });
         });
+    }).catch(error => {
+        document.getElementById("error-message").style.display = "block";
     });
 }
 
@@ -69,6 +74,7 @@ const getInputValue = () => document.getElementById("meal-input").value;
 //to add event handler to the search button
 document.getElementById("search-btn").addEventListener("click", () => {
     document.getElementById("search-results-area").innerHTML = '';
+    document.getElementById("error-message").style.display = "none";
     const mealName = getInputValue();
     displaySearchResult(mealName);
 });
