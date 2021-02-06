@@ -1,11 +1,11 @@
 /*Header Area Search Bar Styling Start*/
-.search-bar{
+#search-bar{
     display: flex;
     align-items: center;
     justify-content: center;
     margin: 50px auto;
 }
-.search-bar > div{
+#search-bar > div{
     width: max-content;
     display: flex;
     align-items: center;
@@ -14,13 +14,13 @@
     padding: 15px 0 15px 15px;
     border-radius: 10px 0 0 10px;
 }
-.search-bar > div > input{
+#search-bar > div > input{
     font-size: 20px;
     padding: 10px;
     border: none;
     background-color: transparent;
 }
-.search-bar > button{
+#search-bar > button{
     font-size: 20px;
     padding: 25px;
     margin: 0;
@@ -30,7 +30,7 @@
     border-radius: 0 10px 10px 0;
     cursor: pointer;
 }
-.search-bar > div > img{
+#search-bar > div > img{
     width: 30px;
 }
 /*Header Area Search Bar Styling end*/
@@ -51,4 +51,14 @@
 #search-results-area > div > img{
     width: 200px;
     border-radius: 15px 15px 0 0;
+}
+/*Search Result Area Styling end*/
+
+/*Details Info Area Styling Start*/
+#details-area{
+    display: none;
+}
+#details-area div{
+    width: max-content;
+    margin: 50px auto;
 }
