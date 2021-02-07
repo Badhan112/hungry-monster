@@ -47,8 +47,15 @@ const displayMealDetails = mealId => {
 
 //to display food image and name into search result section
 const displaySearchResult = mealName => {
-    const api = `https://www.themealdb.com/api/json/v1/1/search.php?s=${mealName}`;
+    let api;
     const resultSection = document.getElementById("search-results-area");
+
+    // to add posiblity to search meals by first letter
+    if(mealName.length == 1){
+        api = `https://www.themealdb.com/api/json/v1/1/search.php?f=${mealName}`;
+    } else{
+        api = `https://www.themealdb.com/api/json/v1/1/search.php?s=${mealName}`;
+    }
 
     getServerdata(api).then( data => {
         //Server gives the array of multiple meal info of maximum keyword matching meal name
