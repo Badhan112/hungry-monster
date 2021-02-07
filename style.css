@@ -87,6 +87,14 @@ nav ul li:hover a{
     #search-results-area{
         grid-template-columns: repeat(1, 200px);
     }
+    #search-bar > div > input{
+        width: 8em;
+        font-size: 15px;
+    }
+    #search-bar > button{
+        font-size: 15px;
+        padding: 1.5em;
+    }
 }
 @media (min-width: 600px){
     #search-results-area{
