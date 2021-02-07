@@ -5,6 +5,23 @@ const getServerdata = async api => {
     return data;
 }
 
+//to display all ingredient into a list
+const displayIngredients = detailsInfo => {
+    //to get property value of properties `strIngredient1 to 20` and `strMeasure1 to 20`
+    for (let i = 1; i <= 20; i++) {
+        const ingredient = `strIngredient${i}`;
+        const ingredientMeasure = `strMeasure${i}`;
+
+        //"if" used to ignore null or empty("") value  
+        if(detailsInfo[ingredient]){
+            const listItem = document.createElement("li");
+            listItem.innerText = `${detailsInfo[ingredientMeasure]} ${detailsInfo[ingredient]}`;
+            document.getElementById("ingredients-list").appendChild(listItem);
+        }
+    }
+}
+
+//to display full details of a meal
 const displayMealDetails = mealId => {
     const api = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${mealId}`;
     const detailsSection = document.getElementById("details-area");
@@ -21,17 +38,7 @@ const displayMealDetails = mealId => {
         `;
 
         detailsSection.innerHTML = info;
-        for (let i = 1; i <= 20; i++) {
-            const ingredient = `strIngredient${i}`;
-            const ingredientMeasure = `strMeasure${i}`;
-
-            //"if" used to ignore null or empty("") value  
-            if(detailsInfo[ingredient]){
-                const listItem = document.createElement("li");
-                listItem.innerText = `${detailsInfo[ingredientMeasure]} ${detailsInfo[ingredient]}`;
-                document.getElementById("ingredients-list").appendChild(listItem);
-            }
-        }
+        displayIngredients(detailsInfo);
     }).catch(error => {
         document.getElementById("error-message").innerText = "Connection Lost! Please Check Your Internet Connection";
         document.getElementById("error-message").style.display = "block";
