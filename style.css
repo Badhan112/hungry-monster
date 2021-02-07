@@ -1,3 +1,6 @@
+body{
+    font-family: 'Roboto', sans-serif;
+}
 /*Header Area Search Bar Styling Start*/
 #search-bar{
     display: flex;
