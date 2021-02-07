@@ -1,14 +1,16 @@
-const getMealDetails = async api =>{
+// to get data from server
+const getServerdata = async api => {
     const response = await fetch(api);
     const data = await response.json();
-    return data.meals[0];
+    return data;
 }
 
 const displayMealDetails = mealId => {
     const api = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${mealId}`;
     const detailsSection = document.getElementById("details-area");
 
-    getMealDetails(api).then(detailsInfo => {
+    getServerdata(api).then(data => {
+        const detailsInfo = data.meals[0];
         const info = `
             <div>
                 <img src="${detailsInfo.strMealThumb}">
@@ -36,19 +38,15 @@ const displayMealDetails = mealId => {
     });
 }
 
-const getMealSearchResult = async api => {
-    const response = await fetch(api);
-    const data = await response.json();
-    return data.meals;
-}
-
 //to display food image and name into search result section
 const displaySearchResult = mealName => {
     const api = `https://www.themealdb.com/api/json/v1/1/search.php?s=${mealName}`;
     const resultSection = document.getElementById("search-results-area");
 
-    getMealSearchResult(api).then( data => {
-        data.map(meal => {
+    getServerdata(api).then( data => {
+        //Server gives the array of multiple meal info of maximum keyword matching meal name
+        //map used to display all meal name and image in individual div element
+        data.meals.map(meal => {
             const mealDiv = document.createElement("div");
             const mealInfo = `
                 <img src="${meal.strMealThumb}">
@@ -57,10 +55,12 @@ const displaySearchResult = mealName => {
             mealDiv.innerHTML = mealInfo;
             resultSection.appendChild(mealDiv);
 
+            //to add event handler to individual area(div element) of Single Meal info
             mealDiv.addEventListener("click", () => {
                 document.getElementById("search-bar").style.display = "none";
                 document.getElementById("search-results-area").style.display = "none";
                 document.getElementById("details-area").style.display = "block";
+
                 displayMealDetails(meal.idMeal);
             });
         });
@@ -72,7 +72,7 @@ const displaySearchResult = mealName => {
 //function expression to get input from search bar input element
 const getInputValue = () => document.getElementById("meal-input").value;
 
-//to add event handler to the search button
+//to add event handler to the Search Button
 document.getElementById("search-btn").addEventListener("click", () => {
     document.getElementById("search-results-area").innerHTML = '';
     document.getElementById("error-message").style.display = "none";
