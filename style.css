@@ -1,7 +1,39 @@
 body{
     font-family: 'Roboto', sans-serif;
 }
-/*Header Area Search Bar Styling Start*/
+/*Navigation Bar Styling Start*/
+nav{
+    margin: 0 30px;
+}
+nav ul{
+    list-style: none;
+    padding: 0;
+    display: flex;
+    /* flex-wrap: wrap; */
+    align-items: center;
+}
+nav ul li{
+    margin: 5px;
+    padding: 10px;
+    border-radius: 5px;
+}
+nav ul li a{
+    text-decoration: none;
+    color: black;
+}
+#logo{
+    margin-right: auto;
+}
+nav ul li:hover{
+    background-color: orange;
+    font-weight: bold;
+}
+nav ul li:hover a{
+    color: white;
+}
+/*Navigation Bar Styling end*/
+
+/*Search Bar Styling Start*/
 #search-bar{
     display: flex;
     align-items: center;
@@ -41,7 +73,7 @@ body{
     display: none;
     color: tomato;
 }
-/*Header Area Search Bar Styling end*/
+/*Search Bar Styling end*/
 
 /*Search Result Area Styling Start*/
 #search-results-area{
@@ -110,3 +142,4 @@ body{
 #ingredients-list p{
     margin: 0;
 }
+/*Details Info Area Styling end*/

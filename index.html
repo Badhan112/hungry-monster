@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hungry Monster</title>
-    
+
     <!--Google Font Link-->
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
@@ -15,9 +15,18 @@
 </head>
 <body>
     <header>
+        <nav>
+            <ul>
+                <li id="logo"><img src="images/brand-logo.svg"></li>
+                <li><a href="">Home</a></li>
+                <li><a href="">About</a></li>
+                <li><a href="">Recipies</a></li>
+                <li><a href="">Blog</a></li>
+            </ul>
+        </nav>
         <div id="search-bar">
             <div>
-                <img src="search-icon.svg" alt="search-icon">
+                <img src="images/search-icon.svg" alt="search-icon">
                 <input id="meal-input" type="text" placeholder="Search for Meal...">
             </div>
             <button id="search-btn" type="submit" >Search</button>
@@ -25,9 +34,10 @@
         <h2 id="error-message">Empty Result! Can't Find this Meal</h2>
     </header>
 
-    <section id="search-results-area"></section>
-
-    <section id="details-area"></section>
+    <main>
+        <section id="search-results-area"></section>
+        <section id="details-area"></section>
+    </main>
 
     <!--External JS Link-->
     <script src="app.js"></script>
