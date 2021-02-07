@@ -26,7 +26,8 @@ const displayMealDetails = mealId => {
     const api = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${mealId}`;
     const detailsSection = document.getElementById("details-area");
 
-    getServerdata(api).then(data => {
+    getServerdata(api)
+    .then(data => {
         const detailsInfo = data.meals[0];
         const info = `
             <div>
@@ -39,25 +40,17 @@ const displayMealDetails = mealId => {
 
         detailsSection.innerHTML = info;
         displayIngredients(detailsInfo);
-    }).catch(error => {
+    })
+    .catch(error => {
         document.getElementById("error-message").innerText = "Connection Lost! Please Check Your Internet Connection";
         document.getElementById("error-message").style.display = "block";
     });
 }
 
-//to display food image and name into search result section
-const displaySearchResult = mealName => {
-    let api;
+const displayIndividualMeal = api =>{
     const resultSection = document.getElementById("search-results-area");
-
-    // to add posiblity to search meals by first letter
-    if(mealName.length == 1){
-        api = `https://www.themealdb.com/api/json/v1/1/search.php?f=${mealName}`;
-    } else{
-        api = `https://www.themealdb.com/api/json/v1/1/search.php?s=${mealName}`;
-    }
-
-    getServerdata(api).then( data => {
+    getServerdata(api)
+    .then( data => {
         //Server gives the array of multiple meal info of maximum keyword matching meal name
         //map used to display all meal name and image in individual div element
         data.meals.map(meal => {
@@ -74,13 +67,27 @@ const displaySearchResult = mealName => {
                 document.getElementById("search-bar").style.display = "none";
                 document.getElementById("search-results-area").style.display = "none";
                 document.getElementById("details-area").style.display = "block";
-
                 displayMealDetails(meal.idMeal);
             });
         });
-    }).catch(error => {
+    })
+    .catch(error => {
         document.getElementById("error-message").style.display = "block";
     });
+}
+
+//to display food image and name into search result section
+const displayResult = mealName => {
+    let api;
+
+    // to add posiblity to search meals by first letter
+    if(mealName.length == 1){
+        api = `https://www.themealdb.com/api/json/v1/1/search.php?f=${mealName}`;
+    } else{
+        api = `https://www.themealdb.com/api/json/v1/1/search.php?s=${mealName}`;
+    }
+
+    displayIndividualMeal(api);
 }
 
 //function expression to get input from search bar input element
@@ -91,5 +98,42 @@ document.getElementById("search-btn").addEventListener("click", () => {
     document.getElementById("search-results-area").innerHTML = '';
     document.getElementById("error-message").style.display = "none";
     const mealName = getInputValue();
-    displaySearchResult(mealName);
+    displayResult(mealName);
 });
+
+
+const displayMealByCategory = categoryName => {
+    const categoryApi = `https://www.themealdb.com/api/json/v1/1/filter.php?c=${categoryName}`;
+    displayIndividualMeal(categoryApi);
+}
+
+//IIFE to display Meal Category by Default
+(function(){
+    const categoryApi = "https://www.themealdb.com/api/json/v1/1/categories.php";
+    const resultSection = document.getElementById("search-results-area");
+
+    getServerdata(categoryApi)
+    .then(data => {
+        const categories = data.categories;
+        categories.map(category => {
+            const categoryDiv = document.createElement("div");
+            const categoryInfo = `
+                <img src="${category.strCategoryThumb}">
+                <h3>${category.strCategory}<h3>
+            `;
+            categoryDiv.innerHTML = categoryInfo;
+            resultSection.appendChild(categoryDiv);
+
+            //to add event handler to individual area(div element) of Single Meal Category
+            categoryDiv.addEventListener("click", () => {
+                document.getElementById("search-results-area").innerHTML = "";
+                displayMealByCategory(category.strCategory);
+            });
+        });
+    })
+    .catch(error =>{
+        document.getElementById("error-message").innerText = "Fail to load data from Server";
+        document.getElementById("error-message").style.display = "block";
+    });
+})();
+
