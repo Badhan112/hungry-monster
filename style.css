@@ -43,9 +43,28 @@
 /*Search Result Area Styling Start*/
 #search-results-area{
     display: grid;
-    grid-template-columns: repeat(4, 200px);
     gap: 50px;
     justify-content: center;
+}
+@media (max-width: 600px){
+    #search-results-area{
+        grid-template-columns: repeat(1, 200px);
+    }
+}
+@media (min-width: 600px){
+    #search-results-area{
+        grid-template-columns: repeat(2, 200px);
+    }
+}
+@media (min-width: 768px){
+    #search-results-area{
+        grid-template-columns: repeat(3, 200px);
+    }
+}
+@media (min-width: 992px){
+    #search-results-area{
+        grid-template-columns: repeat(4, 200px);
+    }
 }
 #search-results-area > div{
     background-color: #f1f1f1;
