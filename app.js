@@ -1,9 +1,3 @@
-const getMealSearchResult = async api => {
-    const response = await fetch(api);
-    const data = await response.json();
-    return data.meals;
-}
-
 const getMealDetails = async api =>{
     const response = await fetch(api);
     const data = await response.json();
@@ -29,7 +23,8 @@ const displayMealDetails = mealId => {
             const ingredient = `strIngredient${i}`;
             const ingredientMeasure = `strMeasure${i}`;
 
-            if(detailsInfo[ingredientMeasure]){
+            //"if" used to ignore null or empty("") value  
+            if(detailsInfo[ingredient]){
                 const listItem = document.createElement("li");
                 listItem.innerText = `${detailsInfo[ingredientMeasure]} ${detailsInfo[ingredient]}`;
                 document.getElementById("ingredients-list").appendChild(listItem);
@@ -39,6 +34,12 @@ const displayMealDetails = mealId => {
         document.getElementById("error-message").innerText = "Connection Lost! Please Check Your Internet Connection";
         document.getElementById("error-message").style.display = "block";
     });
+}
+
+const getMealSearchResult = async api => {
+    const response = await fetch(api);
+    const data = await response.json();
+    return data.meals;
 }
 
 //to display food image and name into search result section
