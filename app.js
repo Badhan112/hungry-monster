@@ -15,7 +15,7 @@ const displayIngredients = detailsInfo => {
         //"if" used to ignore null or empty("") value  
         if(detailsInfo[ingredient]){
             const listItem = document.createElement("li");
-            listItem.innerText = `${detailsInfo[ingredientMeasure]} ${detailsInfo[ingredient]}`;
+            listItem.innerHTML = `<img src="check-box.svg"> <p>${detailsInfo[ingredientMeasure]} ${detailsInfo[ingredient]}</p>`;
             document.getElementById("ingredients-list").appendChild(listItem);
         }
     }

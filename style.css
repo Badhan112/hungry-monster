@@ -93,7 +93,20 @@ body{
     width: 300px;
     border-radius: 10px;
 }
-#details-area ul{
+#ingredients-list{
     list-style: none;
     padding: 0;
+}
+#ingredients-list img{
+    width: 20px;
+    margin-right: 5px;
+}
+#ingredients-list li{
+    display: flex;
+    line-height: 0;
+    align-items: center;
+    margin: 5px 0;
+}
+#ingredients-list p{
+    margin: 0;
 }
