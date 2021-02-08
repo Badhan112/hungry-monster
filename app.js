@@ -11,7 +11,6 @@ const displayIngredients = detailsInfo => {
     for (let i = 1; i <= 20; i++) {
         const ingredient = `strIngredient${i}`;
         const ingredientMeasure = `strMeasure${i}`;
-
         //"if" used to ignore null or empty("") value  
         if(detailsInfo[ingredient]){
             const listItem = document.createElement("li");
@@ -37,7 +36,6 @@ const displayMealDetails = mealId => {
                 <ul id="ingredients-list"></ul>
             </div>
         `;
-
         detailsSection.innerHTML = info;
         displayIngredients(detailsInfo);
     })
@@ -61,7 +59,6 @@ const displayIndividualMeal = api =>{
             `;
             mealDiv.innerHTML = mealInfo;
             resultSection.appendChild(mealDiv);
-
             //to add event handler to individual area(div element) of Single Meal info
             mealDiv.addEventListener("click", () => {
                 document.getElementById("search-bar").style.display = "none";
@@ -79,14 +76,12 @@ const displayIndividualMeal = api =>{
 //to display food image and name into search result section
 const displayResult = mealName => {
     let api;
-
     // to add posiblity to search meals by first letter
     if(mealName.length == 1){
         api = `https://www.themealdb.com/api/json/v1/1/search.php?f=${mealName}`;
     } else{
         api = `https://www.themealdb.com/api/json/v1/1/search.php?s=${mealName}`;
     }
-
     displayIndividualMeal(api);
 }
 
@@ -101,17 +96,11 @@ document.getElementById("search-btn").addEventListener("click", () => {
     displayResult(mealName);
 });
 
-
-const displayMealByCategory = categoryName => {
-    const categoryApi = `https://www.themealdb.com/api/json/v1/1/filter.php?c=${categoryName}`;
-    displayIndividualMeal(categoryApi);
-}
-
 //IIFE to display Meal Category by Default
 (function(){
     const categoryApi = "https://www.themealdb.com/api/json/v1/1/categories.php";
     const resultSection = document.getElementById("search-results-area");
-
+    
     getServerdata(categoryApi)
     .then(data => {
         const categories = data.categories;
@@ -123,11 +112,12 @@ const displayMealByCategory = categoryName => {
             `;
             categoryDiv.innerHTML = categoryInfo;
             resultSection.appendChild(categoryDiv);
-
             //to add event handler to individual area(div element) of Single Meal Category
             categoryDiv.addEventListener("click", () => {
                 document.getElementById("search-results-area").innerHTML = "";
-                displayMealByCategory(category.strCategory);
+                // displayMealByCategory(category.strCategory);
+                const singlecategoryApi = `https://www.themealdb.com/api/json/v1/1/filter.php?c=${category.strCategory}`;
+                displayIndividualMeal(singlecategoryApi);
             });
         });
     })
@@ -136,4 +126,3 @@ const displayMealByCategory = categoryName => {
         document.getElementById("error-message").style.display = "block";
     });
 })();
-
