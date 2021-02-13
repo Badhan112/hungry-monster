@@ -1,3 +1,7 @@
+const toggleSpinner = () => {
+    const spinner = document.getElementById("spinner");
+    spinner.classList.toggle("toggle");
+}
 // to get data from server
 const getServerdata = async api => {
     const response = await fetch(api);
@@ -38,38 +42,87 @@ const displayMealDetails = mealId => {
         `;
         detailsSection.innerHTML = info;
         displayIngredients(detailsInfo);
+        toggleSpinner();
     })
     .catch(error => {
-        document.getElementById("error-message").innerText = "Connection Lost! Please Check Your Internet Connection";
+        document.getElementById("error-message").innerText = "Fail to load data from Server";
         document.getElementById("error-message").style.display = "block";
+        toggleSpinner();
     });
 }
 
-const displayIndividualMeal = api =>{
+const displayIndividualMealName = data => {
     const resultSection = document.getElementById("search-results-area");
+    //Server gives the array of multiple meal info of maximum keyword matching meal name
+    //map used to display all meal name and image in individual div element
+    data.meals.map(meal => {
+        const mealDiv = document.createElement("div");
+        const mealInfo = `
+            <img src="${meal.strMealThumb}">
+            <h3>${meal.strMeal}<h3>
+        `;
+        mealDiv.innerHTML = mealInfo;
+        resultSection.appendChild(mealDiv);
+        //to add event handler to individual area(div element) of Single Meal info
+        mealDiv.addEventListener("click", () => {
+            document.getElementById("search-bar").style.display = "none";
+            document.getElementById("search-results-area").style.display = "none";
+            document.getElementById("details-area").style.display = "block";
+            toggleSpinner();
+
+            displayMealDetails(meal.idMeal);
+        });
+    });
+    toggleSpinner();
+}
+
+const displayIndividualMeal = api =>{
     getServerdata(api)
     .then( data => {
-        //Server gives the array of multiple meal info of maximum keyword matching meal name
-        //map used to display all meal name and image in individual div element
-        data.meals.map(meal => {
-            const mealDiv = document.createElement("div");
-            const mealInfo = `
-                <img src="${meal.strMealThumb}">
-                <h3>${meal.strMeal}<h3>
-            `;
-            mealDiv.innerHTML = mealInfo;
-            resultSection.appendChild(mealDiv);
-            //to add event handler to individual area(div element) of Single Meal info
-            mealDiv.addEventListener("click", () => {
-                document.getElementById("search-bar").style.display = "none";
-                document.getElementById("search-results-area").style.display = "none";
-                document.getElementById("details-area").style.display = "block";
-                displayMealDetails(meal.idMeal);
-            });
-        });
+        displayIndividualMealName(data);
+    })
+    .catch(error => {
+        displayResultByIngredient();
+    });
+}
+
+const displayResultByIngredient = () => {
+    const keyword = getInputValue();
+    const api = `https://www.themealdb.com/api/json/v1/1/filter.php?i=${keyword}`;
+    
+    getServerdata(api)
+    .then( data => {
+        displayIndividualMealName(data);
+    })
+    .catch(error => {
+        displayResultByCategory();
+    });
+}
+
+const displayResultByCategory = () => {
+    const keyword = getInputValue();
+    const api = `https://www.themealdb.com/api/json/v1/1/filter.php?c=${keyword}`;
+    
+    getServerdata(api)
+    .then( data => {
+        displayIndividualMealName(data);
+    })
+    .catch(error => {
+        displayResultByArea();
+    });
+}
+
+const displayResultByArea = () => {
+    const keyword = getInputValue();
+    const api = `https://www.themealdb.com/api/json/v1/1/filter.php?a=${keyword}`;
+    
+    getServerdata(api)
+    .then( data => {
+        displayIndividualMealName(data);
     })
     .catch(error => {
         document.getElementById("error-message").style.display = "block";
+        toggleSpinner();
     });
 }
 
@@ -93,14 +146,22 @@ document.getElementById("search-btn").addEventListener("click", () => {
     document.getElementById("search-results-area").innerHTML = '';
     document.getElementById("error-message").style.display = "none";
     const mealName = getInputValue();
+    toggleSpinner();
     displayResult(mealName);
+});
+
+document.getElementById("meal-input").addEventListener("keypress", function(event){
+    if(event.key === "Enter"){
+        document.getElementById("search-btn").click();
+    }
 });
 
 //IIFE to display Meal Category by Default
 (function(){
     const categoryApi = "https://www.themealdb.com/api/json/v1/1/categories.php";
     const resultSection = document.getElementById("search-results-area");
-    
+    toggleSpinner();
+
     getServerdata(categoryApi)
     .then(data => {
         const categories = data.categories;
@@ -115,11 +176,13 @@ document.getElementById("search-btn").addEventListener("click", () => {
             //to add event handler to individual area(div element) of Single Meal Category
             categoryDiv.addEventListener("click", () => {
                 document.getElementById("search-results-area").innerHTML = "";
+                toggleSpinner();
                 // displayMealByCategory(category.strCategory);
                 const singlecategoryApi = `https://www.themealdb.com/api/json/v1/1/filter.php?c=${category.strCategory}`;
                 displayIndividualMeal(singlecategoryApi);
             });
         });
+        toggleSpinner();
     })
     .catch(error =>{
         document.getElementById("error-message").innerText = "Fail to load data from Server";

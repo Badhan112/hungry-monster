@@ -1,4 +1,4 @@
-body{
+*{
     font-family: 'Roboto', sans-serif;
 }
 
@@ -76,6 +76,32 @@ nav ul li:hover a{
     color: tomato;
 }
 /*Search Bar Styling end*/
+
+/*Spinner Styling start*/
+#spinner{
+    border: 10px solid rgb(230, 229, 229);
+    border-top: 10px solid rgb(22, 22, 73);
+    border-bottom: 10px solid rgb(22, 22, 73);
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    margin: auto;
+    animation: spin 0.7s infinite ease;
+}
+
+@keyframes spin{
+    0%{
+        transform: rotate(0deg);
+    }
+    100%{
+        transform: rotate(360deg);
+    }
+}
+
+.toggle{
+    display: none;
+}
+/*Spinner Styling end*/
 
 /*Search Result Area Styling Start*/
 #search-results-area{
